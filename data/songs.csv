@@ -9,3 +9,15 @@ id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
 8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
 9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
 10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
+
+
+11,Crown the Block,Kase Theory,hip-hop,confident,0.85,95,0.72,0.91,0.08
+12,Golden Hour Waltz,The Vellum Strings,classical,nostalgic,0.22,68,0.79,0.28,0.97
+13,Dust & Diesel,River Hawke,country,melancholic,0.48,104,0.44,0.55,0.74
+14,Void Protocol,Machina,metal,aggressive,0.97,178,0.21,0.43,0.04
+15,Slow Burn Sunday,Velvet Coil,r&b,romantic,0.55,88,0.83,0.76,0.42
+16,Flashback Funk,The Grooveline,funk,euphoric,0.80,112,0.90,0.94,0.16
+17,Island Static,Reef Drift,reggae,dreamy,0.52,76,0.86,0.70,0.61
+18,Drop the Grid,Pulse Array,electronic,energetic,0.92,140,0.63,0.89,0.03
+19,Cabin Smoke,Forest Dial,folk,melancholic,0.31,66,0.52,0.38,0.93
+20,Neon Rainfall,Cassette Ghost,synthwave,nostalgic,0.69,105,0.58,0.68,0.29
