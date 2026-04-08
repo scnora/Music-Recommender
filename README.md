@@ -30,6 +30,17 @@ Some prompts to answer:
 You can include a simple diagram or bullet list if helpful.
 
 ---
+Each song uses enegry, valence, acousticness, dancability, genre, and mood. 
+
+I’m mainly using the numeric features to capture the “vibe” of the song, and then genre/mood to keep things from feeling completely off.
+
+The information that UserProfile stores are preferred_energy, preferred_valence, preferred_acousticness, preferred_danceability,preferred_genres (list), and preferred_mood
+
+Recommender computes a score by score = 1 - |song_value - user_preference|
+
+Then I apply weights to each feature (energy matters more than something like danceability, etc.)
+
+For genre and mood, I give a bonus if they match the user’s preferences
 
 ## Getting Started
 
