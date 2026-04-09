@@ -5,6 +5,8 @@
 Give your model a short, descriptive name.  
 Example: **VibeFinder 1.0**  
 
+
+VibeMatcher 1.0
 ---
 
 ## 2. Intended Use  
@@ -17,6 +19,12 @@ Prompts:
 - What assumptions does it make about the user  
 - Is this for real users or classroom exploration  
 
+
+This recommender is designed to suggest songs based on a user’s vibe and preferences. It mainly recommends songs using features like energy, mood, and genre.
+
+It assumes the user has a general taste (like chill, high-energy, etc.) that can be represented with a few numbers and categories.
+
+This is not for real users. It’s for classroom exploration to understand how recommendation systems work.
 ---
 
 ## 3. How the Model Works  
@@ -32,6 +40,16 @@ Prompts:
 
 Avoid code here. Pretend you are explaining the idea to a friend who does not program.
 
+
+The model looks at features like energy, valence, acousticness, genre, and mood. It compares those to what the user likes.
+
+For numeric features, it checks how close the song is to the user’s preference. The closer it is, the higher the score.
+
+For genre and mood, it gives bonus points if they match. Genre has the biggest weight, so it matters the most.
+
+Then it adds everything together to get a final score. After that, it sorts all songs by score and recommends the top ones.
+
+I kept the main logic the same, but I focused more on how weights affect the results and how the system behaves with different users.
 ---
 
 ## 4. Data  
@@ -45,6 +63,14 @@ Prompts:
 - Did you add or remove data  
 - Are there parts of musical taste missing in the dataset  
 
+
+The dataset has a small number of songs.
+
+It includes different genres like lofi, pop, rock, classical, hip-hop, and more. It also includes moods like chill, energetic, and others.
+
+I added some data.
+
+A lot of musical taste is missing. Some genres and moods only have one song, and there are gaps in energy levels.
 ---
 
 ## 5. Strengths  
@@ -56,6 +82,14 @@ Prompts:
 - User types for which it gives reasonable results  
 - Any patterns you think your scoring captures correctly  
 - Cases where the recommendations matched your intuition  
+
+The system works well for users with clear preferences, like lofi or high-energy listeners.
+
+It does a good job matching the “vibe” when the dataset has similar songs.
+
+Energy and acousticness together help separate chill vs. intense music pretty well.
+
+In many cases, the recommendations made sense based on the user profile.
 
 ---
 
@@ -70,9 +104,13 @@ Prompts:
 - Cases where the system overfits to one preference  
 - Ways the scoring might unintentionally favor some users  
 
+The system prioritizes genre too much because of the +2.0 weight. This creates a filter bubble, especially when a genre only has one song.
 
-The system prioritized genre more than usualy because of the +2.0 weight, especially if the dataset only has one song per genre. This causes there to be a filter bubble where users who like very different genres get the same song recommended everytime, even if another song would be more suiting.The system also ignores features like danceability and tempo, which means users who care about those (like funk or hip-hop listeners) aren’t really being represented in the scoring at all. Another feature that isnt being considered is the moods of the songs. Some moods only have one song in the dataset . The combination of uneven data and weighted scoring makes the system feel unfair depending on what kind of listener you are.
+It ignores features like danceability and tempo, so some users are not well represented.
 
+Some moods only have one song, so the system can’t recommend variety for those users.
+
+The dataset is uneven, so some users get better recommendations than others.
 
 ## Reflection.md for Phase 4 step 5 
 
@@ -123,6 +161,14 @@ Prompts:
 - Improving diversity among the top results  
 - Handling more complex user tastes  
 
+I would add more songs to balance the dataset.
+
+I would include features like danceability and tempo in scoring.
+
+I would lower the genre weight to reduce filter bubbles.
+
+I would also add rules to increase diversity in the recommendations.
+
 ---
 
 ## 9. Personal Reflection  
@@ -134,3 +180,21 @@ Prompts:
 - What you learned about recommender systems  
 - Something unexpected or interesting you discovered  
 - How this changed the way you think about music recommendation apps  
+
+
+I learned that recommendation systems are not just about matching things, but also about how you weight features.
+
+It was interesting to see how small changes in weights can completely change results.
+
+This made me realize that real music apps probably deal with a lot of bias and data issues behind the scenes.
+
+
+## my own reflection 
+
+My biggest learning moment was realizing how much the weights actually matter. Even like making genre worth more, completely changed the recommendations. It showed me that the logic isn’t just about the formula, but about the choices behind it.
+
+AI tools helped me a lot with structuring my ideas and debugging, especially when I wasn’t sure how to design the scoring. But I had to double-check things when it came to reasoning about fairness and bias, because sometimes the suggestions sounded right but didn’t actually match how my system behaved.
+
+What surprised me the most is that even a really simple algorithm can still feel like it’s making “smart” recommendations. Just comparing a few features and sorting results already starts to feel personalized.
+
+If I extended this project, I would add more features like danceability and maybe let users have multiple moods or genres at once. I’d also try to improve diversity so the recommendations don’t feel repetitive.
