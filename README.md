@@ -43,7 +43,10 @@ Then I apply weights to each feature (energy matters more than something like da
 For genre and mood, I give a bonus if they match the user’s preferences
 
 My recommender is split into a few clear steps. First I load in all the song data from a CSV file and store it as a list of song objects. Then I take in a user profile that represents what the user likes (genre, mood, and the numeric features). After that, I score each song one at a time based on how well it matches the user. Once every song has a score, I sort them and return the top results.
----
+
+<img src="terminal.png" width="300" alt="terminal photo for phase 3">
+<img src="users.png" width="300" alt="terminal photo for phase 4">
+
 
 ## Getting Started
 
@@ -88,7 +91,9 @@ Use this section to document the experiments you ran. For example:
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
 
+
 ---
+
 
 ## Limitations and Risks
 
@@ -114,6 +119,7 @@ Write 1 to 2 paragraphs here about what you learned:
 
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
+
 
 
 ---

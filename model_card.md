@@ -70,6 +70,23 @@ Prompts:
 - Cases where the system overfits to one preference  
 - Ways the scoring might unintentionally favor some users  
 
+
+The system prioritized genre more than usualy because of the +2.0 weight, especially if the dataset only has one song per genre. This causes there to be a filter bubble where users who like very different genres get the same song recommended everytime, even if another song would be more suiting.The system also ignores features like danceability and tempo, which means users who care about those (like funk or hip-hop listeners) aren’t really being represented in the scoring at all. Another feature that isnt being considered is the moods of the songs. Some moods only have one song in the dataset . The combination of uneven data and weighted scoring makes the system feel unfair depending on what kind of listener you are.
+
+
+## Reflection.md for Phase 4 step 5 
+
+Lofi vs. High-Energy Profile
+The lofi profile consistently recommended low-energy, high-acousticness songs, while the high-energy profile shifted toward pop, rock, and electronic tracks. This makes sense because energy is one of the stronger weighted numeric features, so changing it has a big impact on results.
+
+Lofi vs. Classical Profile
+Even though both profiles prefer high acousticness, the classical profile always ranked the same classical song at the top due to the genre weight. The lofi profile had more variety because there are multiple songs in that genre. This shows how genre weighting + dataset size can create very different experiences.
+
+High-Energy vs. Mid-Energy Profile
+The high-energy profile got strong matches with clear top results, while the mid-energy profile had more mixed and lower scores. This is because there are fewer songs in the mid-energy range, so the system can’t find close matches. It highlights how the dataset distribution affects fairness.
+
+Mood-Based Profile (euphoric) vs. General Profile
+The euphoric profile always recommended the same song at the top, while a more general mood profile had more variety. This happens because only one song has that mood, so the system can’t really generalize. It ends up overfitting to that single track.
 ---
 
 ## 7. Evaluation  
@@ -84,6 +101,14 @@ Prompts:
 - Any simple tests or comparisons you ran  
 
 No need for numeric metrics unless you created some.
+
+
+I tested multiple user profiles to see how the recommender responds to different preferences. I tried a lofi/chill profile (low energy, high acousticness), a high-energy/EDM-type profile, and a genre-specific profile like classical.
+
+One thing that surprised me was how strongly genre dominated the results. Even when a song matched really well on energy and acousticness, it would still lose to a genre match because of the +2.0 weight. 
+
+Another surprising result was how little impact some features had. For example, acousticness and valence mattered less than I expected, and danceability had no effect at all since it isn’t included in scoring. This made the system feel less accurate for certain types of listeners.
+
 
 ---
 

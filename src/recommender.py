@@ -1,3 +1,4 @@
+import csv
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
 
@@ -46,11 +47,7 @@ class Recommender:
         return "Explanation placeholder"
 
 def load_songs(csv_path: str) -> List[Dict]:
-    """
-    Loads songs from a CSV file.
-    Required by src/main.py
-    """
-    import csv
+    """Read a CSV file and return a list of song dicts with numeric fields cast to float."""
     songs = []
     with open(csv_path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -93,28 +90,19 @@ WEIGHTS = {
 
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
-    """
-    Score a single song against user preferences.
-
-    Scoring recipe
-    --------------
-    Categorical matches  → full point value if equal, 0 otherwise
-    Numeric features     → weight × (1 - |song_value - user_value|)
-                           gives 1.0 when perfect, 0.0 when maximally far
-
-    Returns (score, explanation_string).
-    """
+    """Score one song against user preferences and return (score, explanation) using weighted genre/mood/numeric rules."""
     score = 0.0
     reasons = []
 
     # --- categorical ---
     if song.get("genre", "").lower() == user_prefs.get("genre", "").lower():
         score += WEIGHTS["genre"]
-        reasons.append(f"genre match ({song['genre']})")
+        reasons.append(f"genre match (+{WEIGHTS['genre']})")
 
-    if song.get("mood", "").lower() == user_prefs.get("mood", "").lower():
-        score += WEIGHTS["mood"]
-        reasons.append(f"mood match ({song['mood']})")
+    # EXPERIMENT: mood check temporarily disabled to observe ranking shift without it
+    # if song.get("mood", "").lower() == user_prefs.get("mood", "").lower():
+    #     score += WEIGHTS["mood"]
+    #     reasons.append(f"mood match (+{WEIGHTS['mood']})")
 
     # --- numeric proximity ---
     for feature in ("energy", "valence", "acousticness"):
@@ -122,7 +110,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
             proximity = 1.0 - abs(song[feature] - user_prefs[feature])
             points    = WEIGHTS[feature] * proximity
             score    += points
-            reasons.append(f"{feature} {proximity:.2f}×{WEIGHTS[feature]}")
+            reasons.append(f"{feature} proximity +{points:.2f} (song={song[feature]}, target={user_prefs[feature]})")
 
     explanation = " | ".join(reasons) if reasons else "no strong match"
     return round(score, 3), explanation
@@ -133,10 +121,8 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
     Score every song, then return the top-k ranked by score descending.
     Expected return format: (song_dict, score, explanation)
     """
-    scored = [(*score_song(user_prefs, song), song) for song in songs]
-    # unpack to (song, score, explanation) and sort highest score first
     ranked = sorted(
-        [(song, sc, exp) for sc, exp, song in scored],
+        ((song, *score_song(user_prefs, song)) for song in songs),
         key=lambda x: x[1],
         reverse=True,
     )
